@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Recommendation Result</title>
+
+<style>
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,Tahoma,sans-serif;
+
+}
+
+body{
+
+background:#e8f5e9;
+padding:30px;
+
+}
+
+.container{
+
+max-width:700px;
+margin:auto;
+
+}
+
+.card{
+
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+
+}
+
+h1{
+
+text-align:center;
+color:#2e7d32;
+
+}
+
+.subtitle{
+
+text-align:center;
+margin-top:5px;
+color:#555;
+margin-bottom:30px;
+
+}
+
+.result{
+
+background:#E8F5E9;
+border:2px solid #4CAF50;
+padding:25px;
+border-radius:10px;
+text-align:center;
+margin-bottom:25px;
+
+}
+
+.result h2{
+
+font-size:18px;
+color:#555;
+
+}
+
+.result h1{
+
+font-size:34px;
+margin-top:10px;
+
+}
+
+h3{
+
+margin-bottom:15px;
+
+}
+
+.bar{
+
+margin-bottom:18px;
+
+}
+
+.bar-name{
+
+font-weight:bold;
+margin-bottom:5px;
+
+}
+
+.track{
+
+background:#ddd;
+height:25px;
+border-radius:6px;
+overflow:hidden;
+
+}
+
+.fill{
+
+background:#4CAF50;
+height:100%;
+width:0%;
+color:white;
+display:flex;
+align-items:center;
+padding-left:10px;
+font-weight:bold;
+transition:1s;
+
+}
+
+.info{
+
+background:#f5f5f5;
+padding:15px;
+margin-top:20px;
+border-radius:8px;
+
+}
+
+.info p{
+
+margin-bottom:8px;
+
+}
+
+.button{
+
+display:block;
+width:220px;
+margin:30px auto 0;
+text-align:center;
+padding:14px;
+background:#4CAF50;
+color:white;
+text-decoration:none;
+border-radius:8px;
+font-weight:bold;
+
+}
+
+.button:hover{
+
+background:#388e3c;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>🌾 Mana Raithu</h1>
+
+<p class="subtitle">
+
+Fertilizer Recommendation Result
+
+</p>
+
+<div class="result">
+
+<h2>
+
+Recommended Fertilizer
+
+</h2>
+
+<h1>
+
+{{ prediction }}
+
+</h1>
+
+</div>
+
+<h3>
+
+Top Recommendations
+
+</h3>
+
+{% for name,prob in probabilities %}
+
+<div class="bar">
+
+<div class="bar-name">
+
+{{ name }}
+
+</div>
+
+<div class="track">
+
+<div class="fill"
+
+data-width="{{ (prob*100)|round(1) }}">
+
+{{ (prob*100)|round(1) }}%
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+<div class="info">
+
+<p>
+
+<b>Soil Type :</b>
+
+{{ soil_type }}
+
+</p>
+
+<p>
+
+<b>Crop Type :</b>
+
+{{ crop_type }}
+
+</p>
+
+</div>
+
+<a href="/"
+
+class="button">
+
+Predict Again
+
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+document.querySelectorAll(".fill").forEach(function(bar){
+
+let width=bar.dataset.width;
+
+bar.style.width=width+"%";
+
+});
+
+</script>
+
+</body>
+
+</html>
