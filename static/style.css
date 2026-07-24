@@ -1,190 +1,393 @@
-/* ===========================
-   Mana Raithu CSS
-=========================== */
+/* ===========================================================
+   Mana Raithu — Crop Recommendation
+   Design language: plowed-field furrows + seed-packet tags.
+   Palette:  soil #3C2A1E · field #4B6F44 · turmeric #D9A404
+             paddy #F6F1E3 · card #FFFFFF · alert #B23A2F
+   Type:     Zilla Slab (display, built for Hyderabad) / Hind (body)
+   =========================================================== */
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Hind:wght@400;500;600;700&display=swap');
+
+:root{
+  --soil:#3C2A1E;
+  --soil-soft:#6B5544;
+  --field:#4B6F44;
+  --field-dark:#33502E;
+  --field-pale:#E4EDDF;
+  --turmeric:#D9A404;
+  --turmeric-dark:#B7860A;
+  --paddy:#F6F1E3;
+  --paper:#FFFFFF;
+  --alert:#B23A2F;
+  --alert-bg:#FBE9E7;
+  --line:#E4DCC9;
+  --shadow: 0 12px 30px -12px rgba(60,42,30,.22);
 }
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ -webkit-text-size-adjust:100%; }
 
 body{
-    background:linear-gradient(135deg,#d4fc79,#96e6a1);
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:30px;
+  font-family:'Hind',Tahoma,sans-serif;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      var(--paddy) 0px, var(--paddy) 38px,
+      #F0E9D6 38px, #F0E9D6 40px
+    );
+  color:var(--soil);
+  min-height:100vh;
+  padding:44px 20px 60px;
+  line-height:1.5;
 }
 
-.container{
-    width:100%;
-    max-width:700px;
+.container{ max-width:760px; margin:auto; }
+
+/* ---------- Brand mark ---------- */
+
+.brandbar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:22px;
 }
+
+.brandbar .mark{
+  width:34px; height:34px;
+  border-radius:50%;
+  background:var(--field);
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px;
+  box-shadow:0 3px 0 var(--field-dark);
+  flex-shrink:0;
+}
+
+.brandbar .name{
+  font-family:'Zilla Slab',serif;
+  font-weight:600;
+  font-size:15px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--soil-soft);
+}
+
+/* ---------- Card ---------- */
 
 .card{
-    background:#ffffff;
-    padding:35px;
-    border-radius:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
-    animation:fadeIn .7s ease;
+  background:var(--paper);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--line);
+  overflow:hidden;
 }
 
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:translateY(20px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
+.card-inner{ padding:38px 40px 34px; }
+
+@media(max-width:600px){
+  body{ padding:28px 12px 40px; }
+  .card-inner{ padding:26px 22px 28px; }
 }
 
-h1{
-    text-align:center;
-    color:#2e7d32;
-    margin-bottom:8px;
-    font-size:34px;
+h1.title{
+  font-family:'Zilla Slab',serif;
+  font-weight:700;
+  text-align:center;
+  color:var(--field-dark);
+  font-size:32px;
+  letter-spacing:-0.01em;
 }
 
 .subtitle{
-    text-align:center;
-    color:#666;
-    margin-bottom:25px;
-    font-size:17px;
+  text-align:center;
+  color:var(--soil-soft);
+  margin-top:4px;
+  margin-bottom:8px;
+  font-size:15.5px;
 }
 
-.form-group{
-    margin-bottom:18px;
+/* furrow divider — the recurring signature motif */
+.furrow{
+  height:10px;
+  margin:22px 0 28px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--field) 0px, var(--field) 22px,
+    transparent 22px, transparent 30px
+  );
+  background-size:30px 3px;
+  background-repeat:repeat-x;
+  background-position:left 3px;
+  opacity:.55;
+  border-radius:3px;
 }
 
-label{
-    display:block;
-    margin-bottom:7px;
-    font-weight:600;
-    color:#333;
-}
-
-input,
-select{
-    width:100%;
-    padding:13px;
-    border:2px solid #ddd;
-    border-radius:10px;
-    font-size:15px;
-    transition:.3s;
-}
-
-input:focus,
-select:focus{
-    border-color:#4CAF50;
-    outline:none;
-    box-shadow:0 0 8px rgba(76,175,80,.3);
-}
-
-.row{
-    display:flex;
-    gap:18px;
-}
-
-.row .form-group{
-    flex:1;
-}
-
-button{
-    width:100%;
-    padding:15px;
-    background:#43a047;
-    color:white;
-    border:none;
-    border-radius:10px;
-    font-size:18px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.3s;
-}
-
-button:hover{
-    background:#2e7d32;
-    transform:translateY(-2px);
-}
-
-button:active{
-    transform:scale(.98);
-}
+/* ---------- Error ---------- */
 
 .error{
-    background:#ffebee;
-    color:#c62828;
-    padding:14px;
-    border-radius:8px;
-    margin-bottom:20px;
-    text-align:center;
-    border-left:5px solid #c62828;
+  background:var(--alert-bg);
+  border-left:4px solid var(--alert);
+  color:var(--alert);
+  padding:13px 16px;
+  border-radius:8px;
+  margin-bottom:22px;
+  font-size:14.5px;
+  font-weight:600;
 }
 
-.result-box{
-    background:#e8f5e9;
-    border:2px solid #4CAF50;
-    padding:25px;
-    text-align:center;
-    border-radius:12px;
-    margin:25px 0;
+/* ---------- Form ---------- */
+
+.section-label{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  font-family:'Zilla Slab',serif;
+  font-weight:600;
+  font-size:13.5px;
+  color:var(--field-dark);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  margin:26px 0 14px;
 }
 
-.result-box h2{
-    color:#2e7d32;
-    margin-bottom:10px;
+.section-label:first-of-type{ margin-top:4px; }
+
+.section-label::before{
+  content:"";
+  width:8px; height:8px;
+  background:var(--turmeric);
+  border-radius:2px;
+  transform:rotate(45deg);
+  flex-shrink:0;
 }
 
-.result-box p{
-    font-size:22px;
-    color:#1b5e20;
-    font-weight:bold;
+.row{ display:flex; gap:16px; }
+.row .form-group{ flex:1; }
+.form-group{ margin-bottom:16px; }
+
+label{
+  display:block;
+  font-weight:600;
+  font-size:13.5px;
+  margin-bottom:6px;
+  color:var(--soil-soft);
 }
 
-.back-btn{
-    display:inline-block;
-    margin-top:20px;
-    text-decoration:none;
-    background:#4CAF50;
-    color:white;
-    padding:12px 25px;
-    border-radius:8px;
-    font-weight:bold;
-    transition:.3s;
+input, select{
+  width:100%;
+  padding:12px 14px;
+  border-radius:9px;
+  border:1.5px solid var(--line);
+  background:var(--paddy);
+  font-family:'Hind',sans-serif;
+  font-size:15px;
+  color:var(--soil);
+  transition:border-color .15s, box-shadow .15s, background .15s;
+  appearance:none;
 }
 
-.back-btn:hover{
-    background:#2e7d32;
+select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%236B5544' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 14px center;
+  padding-right:36px;
 }
 
-.footer{
-    text-align:center;
-    margin-top:20px;
-    color:#555;
-    font-size:14px;
+input:focus, select:focus{
+  outline:none;
+  border-color:var(--field);
+  background:var(--paper);
+  box-shadow:0 0 0 3px var(--field-pale);
 }
 
-@media(max-width:768px){
+@media(max-width:600px){
+  .row{ flex-direction:column; gap:0; }
+}
 
-    .card{
-        padding:25px;
-    }
+button.submit, a.button{
+  width:100%;
+  display:block;
+  text-align:center;
+  padding:15px;
+  border:none;
+  background:var(--field);
+  color:var(--paddy);
+  font-family:'Zilla Slab',serif;
+  font-size:16.5px;
+  font-weight:600;
+  letter-spacing:.02em;
+  border-radius:10px;
+  cursor:pointer;
+  margin-top:12px;
+  text-decoration:none;
+  box-shadow:0 3px 0 var(--field-dark);
+  transition:transform .1s, box-shadow .1s, background .15s;
+}
 
-    .row{
-        flex-direction:column;
-        gap:0;
-    }
+button.submit:hover, a.button:hover{ background:var(--field-dark); }
 
-    h1{
-        font-size:28px;
-    }
+button.submit:active, a.button:active{
+  transform:translateY(3px);
+  box-shadow:0 0 0 var(--field-dark);
+}
 
-    button{
-        font-size:16px;
-    }
+button.submit:focus-visible, a.button:focus-visible,
+input:focus-visible, select:focus-visible{
+  outline:3px solid var(--turmeric);
+  outline-offset:2px;
+}
 
+/* ---------- Result page ---------- */
+
+.tag{
+  background:var(--field-pale);
+  border:2px dashed var(--field);
+  border-radius:12px;
+  padding:26px;
+  text-align:center;
+  margin-bottom:26px;
+  position:relative;
+}
+
+.tag .eyebrow{
+  font-family:'Zilla Slab',serif;
+  font-size:13px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  color:var(--field-dark);
+  opacity:.75;
+}
+
+.tag .crop-name{
+  font-family:'Zilla Slab',serif;
+  font-weight:700;
+  font-size:36px;
+  color:var(--field-dark);
+  margin-top:8px;
+}
+
+/* NPK — soil-sample vials */
+
+.npk-title{
+  font-family:'Zilla Slab',serif;
+  font-weight:600;
+  font-size:15px;
+  color:var(--soil-soft);
+  text-align:center;
+  margin-bottom:14px;
+}
+
+.vials{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+
+.vial{
+  background:var(--paper);
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  padding:14px 22px;
+  text-align:center;
+  min-width:96px;
+  border-top:5px solid var(--turmeric);
+}
+
+.vial:nth-child(2){ border-top-color:var(--field); }
+.vial:nth-child(3){ border-top-color:var(--soil-soft); }
+
+.vial .k{
+  font-size:12px;
+  color:var(--soil-soft);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  margin-bottom:4px;
+}
+
+.vial .v{
+  font-family:'Zilla Slab',serif;
+  font-size:21px;
+  font-weight:700;
+  color:var(--soil);
+}
+
+/* Alternatives — growth bars */
+
+h3.alt-title{
+  font-family:'Zilla Slab',serif;
+  font-size:16px;
+  color:var(--soil);
+  margin-bottom:16px;
+}
+
+.bar{ margin-bottom:15px; }
+
+.bar-name{
+  font-weight:600;
+  font-size:14px;
+  margin-bottom:5px;
+  color:var(--soil-soft);
+  display:flex;
+  justify-content:space-between;
+}
+
+.track{
+  background:var(--field-pale);
+  height:20px;
+  border-radius:10px;
+  overflow:hidden;
+  position:relative;
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  border-radius:10px 0 0 10px;
+  background:linear-gradient(90deg, var(--field-dark), var(--field));
+  transition:width 1s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+}
+
+.fill::after{
+  content:"🌱";
+  position:absolute;
+  right:-9px; top:50%;
+  transform:translateY(-50%);
+  font-size:13px;
+}
+
+/* Field summary */
+
+.info{
+  background:var(--paddy);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:16px 18px;
+  margin:26px 0 6px;
+}
+
+.info p{
+  font-size:14.5px;
+  margin-bottom:6px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.info p:last-child{ margin-bottom:0; }
+
+.info b{ color:var(--soil-soft); font-weight:600; }
+
+@media(max-width:600px){
+  .tag .crop-name{ font-size:28px; }
+  .vials{ gap:10px; }
+  .vial{ min-width:80px; padding:12px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .fill{ transition:none; }
+  .card{ animation:none !important; }
 }

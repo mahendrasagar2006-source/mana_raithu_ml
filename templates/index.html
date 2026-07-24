@@ -4,301 +4,104 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mana Raithu - Crop Recommendation</title>
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Segoe UI,Tahoma,sans-serif;
-}
-
-body{
-background:#e8f5e9;
-padding:30px;
-}
-
-.container{
-max-width:750px;
-margin:auto;
-}
-
-.card{
-background:#fff;
-padding:30px;
-border-radius:12px;
-box-shadow:0 0 15px rgba(0,0,0,.15);
-}
-
-h1{
-text-align:center;
-color:#2e7d32;
-margin-bottom:5px;
-}
-
-.subtitle{
-text-align:center;
-color:#555;
-margin-bottom:25px;
-}
-
-.form-group{
-margin-bottom:18px;
-}
-
-label{
-display:block;
-font-weight:600;
-margin-bottom:6px;
-color:#333;
-}
-
-input,select{
-width:100%;
-padding:12px;
-border-radius:8px;
-border:2px solid #ccc;
-font-size:15px;
-}
-
-input:focus,
-select:focus{
-border-color:#4CAF50;
-outline:none;
-}
-
-.row{
-display:flex;
-gap:15px;
-}
-
-.row .form-group{
-flex:1;
-}
-
-button{
-width:100%;
-padding:15px;
-border:none;
-background:#4CAF50;
-color:white;
-font-size:17px;
-font-weight:bold;
-border-radius:8px;
-cursor:pointer;
-margin-top:10px;
-}
-
-button:hover{
-background:#388e3c;
-}
-
-.error{
-background:#ffebee;
-padding:12px;
-margin-bottom:20px;
-color:#c62828;
-border-radius:8px;
-text-align:center;
-}
-
-.section-label{
-font-size:14px;
-color:#777;
-margin-bottom:12px;
-padding-bottom:6px;
-border-bottom:1px solid #eee;
-text-transform:uppercase;
-letter-spacing:0.5px;
-}
-
-@media(max-width:600px){
-.row{
-flex-direction:column;
-}
-}
-
-</style>
-
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-
 <body>
 
 <div class="container">
 
-<div class="card">
-
-<h1>🌾 Mana Raithu</h1>
-
-<p class="subtitle">
-Crop Recommendation System
-</p>
-
-{% if error %}
-
-<div class="error">
-
-{{ error }}
-
-</div>
-
-{% endif %}
-
-<form action="/predict" method="POST">
-
-<!-- Location & Season -->
-<p class="section-label">Location & Season</p>
-
-<div class="row">
-
-<div class="form-group">
-
-<label>State</label>
-
-<select name="state" required>
-
-{% for s in states %}
-
-<option value="{{ s }}">{{ s }}</option>
-
-{% endfor %}
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>Season</label>
-
-<select name="season" required>
-
-{% for s in seasons %}
-
-<option value="{{ s }}">{{ s }}</option>
-
-{% endfor %}
-
-</select>
-
-</div>
-
-</div>
-
-<!-- Soil & Water -->
-<p class="section-label">Soil & Water</p>
-
-<div class="row">
-
-<div class="form-group">
-
-<label>Soil Type</label>
-
-<select name="soil_type" required>
-
-{% for s in soil_types %}
-
-<option value="{{ s }}">{{ s }}</option>
-
-{% endfor %}
-
-</select>
-
-</div>
-
-<div class="form-group">
-
-<label>Water Availability</label>
-
-<select name="water_availability" required>
-
-{% for w in water_availabilities %}
-
-<option value="{{ w }}">{{ w }}</option>
-
-{% endfor %}
-
-</select>
-
-</div>
-
-</div>
-
-<!-- Crop History -->
-<p class="section-label">Crop History</p>
-
-<div class="form-group">
-
-<label>Previous Crop</label>
-
-<select name="previous_crop" required>
-
-{% for c in previous_crops %}
-
-<option value="{{ c }}">{{ c }}</option>
-
-{% endfor %}
-
-</select>
-
-</div>
-
-<!-- Land & Weather -->
-<p class="section-label">Land & Weather</p>
-
-<div class="row">
-
-<div class="form-group">
-
-<label>Land Area (Acres)</label>
-
-<input
-   type="number"
-   step="1"
-   min="1"
-   name="land_area"
-   required>
-
-</div>
-
-<div class="form-group">
-
-<label>Temperature (°C)</label>
-
-<input
-   type="number"
-   step="0.1"
-   name="temperature"
-   required>
-
-</div>
-
-</div>
-
-<div class="form-group">
-
-<label>Rainfall (mm)</label>
-
-<input
-   type="number"
-   step="1"
-   name="rainfall"
-   required>
-
-</div>
-
-<button type="submit">
-
-Get Recommendation
-
-</button>
-
-</form>
-
-</div>
+  <div class="brandbar">
+    <div class="mark">🌾</div>
+    <div class="name">Mana Raithu</div>
+  </div>
+
+  <div class="card">
+    <div class="card-inner">
+
+      <h1 class="title">Crop Recommendation</h1>
+      <p class="subtitle">Tell us about your field — we'll suggest what to grow</p>
+      <div class="furrow"></div>
+
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form action="/predict" method="POST">
+
+        <p class="section-label">Location &amp; Season</p>
+        <div class="row">
+          <div class="form-group">
+            <label for="state">State</label>
+            <select id="state" name="state" required>
+              {% for s in states %}
+              <option value="{{ s }}">{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="season">Season</label>
+            <select id="season" name="season" required>
+              {% for s in seasons %}
+              <option value="{{ s }}">{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <p class="section-label">Soil &amp; Water</p>
+        <div class="row">
+          <div class="form-group">
+            <label for="soil_type">Soil Type</label>
+            <select id="soil_type" name="soil_type" required>
+              {% for s in soil_types %}
+              <option value="{{ s }}">{{ s }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="water_availability">Water Availability</label>
+            <select id="water_availability" name="water_availability" required>
+              {% for w in water_availabilities %}
+              <option value="{{ w }}">{{ w }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <p class="section-label">Crop History</p>
+        <div class="form-group">
+          <label for="previous_crop">Previous Crop</label>
+          <select id="previous_crop" name="previous_crop" required>
+            {% for c in previous_crops %}
+            <option value="{{ c }}">{{ c }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <p class="section-label">Land &amp; Weather</p>
+        <div class="row">
+          <div class="form-group">
+            <label for="land_area">Land Area (Acres)</label>
+            <input type="number" id="land_area" step="1" min="1" name="land_area" required>
+          </div>
+          <div class="form-group">
+            <label for="temperature">Temperature (°C)</label>
+            <input type="number" id="temperature" step="0.1" name="temperature" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="rainfall">Rainfall (mm)</label>
+          <input type="number" id="rainfall" step="1" name="rainfall" required>
+        </div>
+
+        <button type="submit" class="submit">Get Recommendation</button>
+
+      </form>
+
+    </div>
+  </div>
 
 </div>
 
 </body>
-
 </html>
