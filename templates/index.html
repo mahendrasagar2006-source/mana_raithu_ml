@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mana Raithu - Crop Recommendation</title>
+<title>Mana Raithu Nestham - Crop Recommendation</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
+<header class="masthead">
+  <div class="arcs" aria-hidden="true">
+    <svg viewBox="0 0 800 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    </svg>
+  </div>
+  <div class="content">
+    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
+    <h1>Know what to grow, before you sow</h1>
+    <p>A quick field check for farmers in Telangana &amp; Andhra Pradesh</p>
+  </div>
+</header>
+
 <div class="container">
 
-  <div class="brandbar">
-  <img class="mark" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
-</div>
-  <div class="brandbar">
-    <div class="mark"></div>
-    <div class="name">Mana Raithu</div>
-  </div>
-
-  <div class="card">
-    <div class="card-inner">
-
-      <h1 class="title">Crop Recommendation</h1>
-      <p class="subtitle">Tell us about your field — we'll suggest what to grow</p>
-      <div class="furrow"></div>
+  <div class="ledger">
+    <div class="ledger-inner">
 
       {% if error %}
       <div class="error">{{ error }}</div>
@@ -31,73 +31,105 @@
 
       <form action="/predict" method="POST">
 
-        <p class="section-label">Location &amp; Season</p>
-        <div class="row">
-          <div class="form-group">
-            <label for="state">State</label>
-            <select id="state" name="state" required>
-              {% for s in states %}
-              <option value="{{ s }}">{{ s }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="season">Season</label>
-            <select id="season" name="season" required>
-              {% for s in seasons %}
-              <option value="{{ s }}">{{ s }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        </div>
-
-        <p class="section-label">Soil &amp; Water</p>
-        <div class="row">
-          <div class="form-group">
-            <label for="soil_type">Soil Type</label>
-            <select id="soil_type" name="soil_type" required>
-              {% for s in soil_types %}
-              <option value="{{ s }}">{{ s }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="water_availability">Water Availability</label>
-            <select id="water_availability" name="water_availability" required>
-              {% for w in water_availabilities %}
-              <option value="{{ w }}">{{ w }}</option>
-              {% endfor %}
-            </select>
+        <div class="entry">
+          <div class="num">01</div>
+          <div class="body">
+            <p class="heading">Location &amp; season</p>
+            <div class="row">
+              <div class="field">
+                <label for="state">State</label>
+                <div class="select-wrap icon-pin">
+                  <select id="state" name="state" required>
+                  {% for s in states %}
+                  <option value="{{ s }}">{{ s }}</option>
+                  {% endfor %}
+                </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="season">Season</label>
+                <div class="select-wrap icon-calendar">
+                  <select id="season" name="season" required>
+                  {% for s in seasons %}
+                  <option value="{{ s }}">{{ s }}</option>
+                  {% endfor %}
+                </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <p class="section-label">Crop History</p>
-        <div class="form-group">
-          <label for="previous_crop">Previous Crop</label>
-          <select id="previous_crop" name="previous_crop" required>
-            {% for c in previous_crops %}
-            <option value="{{ c }}">{{ c }}</option>
-            {% endfor %}
-          </select>
+        <div class="entry">
+          <div class="num">02</div>
+          <div class="body">
+            <p class="heading">Soil &amp; water</p>
+            <div class="row">
+              <div class="field">
+                <label for="soil_type">Soil type</label>
+                <div class="select-wrap icon-layers">
+                  <select id="soil_type" name="soil_type" required>
+                  {% for s in soil_types %}
+                  <option value="{{ s }}">{{ s }}</option>
+                  {% endfor %}
+                </select>
+                </div>
+              </div>
+              <div class="field">
+                <label for="water_availability">Water availability</label>
+                <div class="select-wrap icon-droplet">
+                  <select id="water_availability" name="water_availability" required>
+                  {% for w in water_availabilities %}
+                  <option value="{{ w }}">{{ w }}</option>
+                  {% endfor %}
+                </select>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <p class="section-label">Land &amp; Weather</p>
-        <div class="row">
-          <div class="form-group">
-            <label for="land_area">Land Area (Acres)</label>
-            <input type="number" id="land_area" step="1" min="1" name="land_area" required>
+        <div class="entry">
+          <div class="num">03</div>
+          <div class="body">
+            <p class="heading">Crop history</p>
+            <div class="field">
+              <label for="previous_crop">Previous crop</label>
+              <div class="select-wrap icon-seed">
+                  <select id="previous_crop" name="previous_crop" required>
+                {% for c in previous_crops %}
+                <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+              </select>
+                </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="temperature">Temperature (°C)</label>
-            <input type="number" id="temperature" step="0.1" name="temperature" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="rainfall">Rainfall (mm)</label>
-          <input type="number" id="rainfall" step="1" name="rainfall" required>
         </div>
 
-        <button type="submit" class="submit">Get Recommendation</button>
+        <div class="entry">
+          <div class="num">04</div>
+          <div class="body">
+            <p class="heading">Land &amp; weather</p>
+            <div class="row">
+              <div class="field">
+                <label for="land_area">Land area (acres)</label>
+                <input type="number" id="land_area" step="1" min="1" name="land_area" required>
+              </div>
+              <div class="field">
+                <label for="temperature">Temperature (°C)</label>
+                <input type="number" id="temperature" step="0.1" name="temperature" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="rainfall">Rainfall (mm)</label>
+              <input type="number" id="rainfall" step="1" name="rainfall" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="submit-wrap">
+          <button type="submit" class="cta">Get recommendation</button>
+        </div>
 
       </form>
 

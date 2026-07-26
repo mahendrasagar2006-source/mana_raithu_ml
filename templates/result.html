@@ -3,68 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recommendation Result — Mana Raithu</title>
+<title>Recommendation Result — Mana Raithu Nestham</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="container">
-  <div class="brandbar">
-  <img class="mark" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
-</div>
-  <div class="brandbar">
-    <div class="mark"></div>
-    <div class="name">Mana Raithu</div>
+<header class="masthead">
+  <div class="arcs" aria-hidden="true">
+    <svg viewBox="0 0 800 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    </svg>
   </div>
+  <div class="content">
+    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
+    <h1>Your field, decoded</h1>
+    <p>Here's what suits the field you described</p>
+  </div>
+</header>
 
-  <div class="card">
-    <div class="card-inner">
+<div class="container">
 
-      <h1 class="title">Your Recommendation</h1>
-      <p class="subtitle">Based on the field details you shared</p>
-      <div class="furrow"></div>
+  <div class="ledger">
+    <div class="ledger-inner">
 
-      <div class="tag">
-        <div class="eyebrow">Recommended Crop</div>
-        <div class="crop-name">{{ prediction }}</div>
+      <div class="result-top">
+        <p class="eyebrow">Recommended crop</p>
+        <p class="crop">{{ prediction }}</p>
       </div>
 
-      <p class="npk-title">Recommended Fertilizer Levels</p>
-      <div class="vials">
-        <div class="vial">
-          <div class="k">Nitrogen (N)</div>
-          <div class="v">{{ fert_n }}</div>
-        </div>
-        <div class="vial">
-          <div class="k">Phosphorous (P)</div>
-          <div class="v">{{ fert_p }}</div>
-        </div>
-        <div class="vial">
-          <div class="k">Potassium (K)</div>
-          <div class="v">{{ fert_k }}</div>
+      <div class="block">
+        <p class="heading">Fertilizer dose (kg/acre)</p>
+        <div class="dose-row">
+          <div class="dose">
+            <div class="k">Nitrogen</div>
+            <div class="v">{{ fert_n }}</div>
+          </div>
+          <div class="dose">
+            <div class="k">Phosphorous</div>
+            <div class="v">{{ fert_p }}</div>
+          </div>
+          <div class="dose">
+            <div class="k">Potassium</div>
+            <div class="v">{{ fert_k }}</div>
+          </div>
         </div>
       </div>
 
-      <h3 class="alt-title">Top Crop Alternatives</h3>
-      {% for name, prob in probabilities %}
-      <div class="bar">
-        <div class="bar-name">
-          <span>{{ name }}</span>
-          <span>{{ (prob*100)|round(1) }}%</span>
+      <div class="block">
+        <p class="heading">Other crops worth considering</p>
+        {% for name, prob in probabilities %}
+        <div class="bar">
+          <div class="bar-name">
+            <span>{{ name }}</span>
+            <span class="pct">{{ (prob*100)|round(1) }}%</span>
+          </div>
+          <div class="track">
+            <div class="fill" data-width="{{ (prob*100)|round(1) }}"></div>
+          </div>
         </div>
-        <div class="track">
-          <div class="fill" data-width="{{ (prob*100)|round(1) }}"></div>
-        </div>
-      </div>
-      {% endfor %}
-
-      <div class="info">
-        <p><b>State</b> <span>{{ state }}</span></p>
-        <p><b>Soil Type</b> <span>{{ soil_type }}</span></p>
-        <p><b>Season</b> <span>{{ season }}</span></p>
+        {% endfor %}
       </div>
 
-      <a href="/" class="button">Predict Again</a>
+      <div class="block">
+        <p class="heading">Field summary</p>
+        <div class="summary">
+          <div class="item"><b>State</b><span>{{ state }}</span></div>
+          <div class="item"><b>Soil type</b><span>{{ soil_type }}</span></div>
+          <div class="item"><b>Season</b><span>{{ season }}</span></div>
+        </div>
+      </div>
+
+      <div class="submit-wrap result">
+        <a href="/" class="cta">Try another field</a>
+      </div>
 
     </div>
   </div>
