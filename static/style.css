@@ -163,18 +163,6 @@ body{
   to{ opacity:1; transform:translateY(0); }
 }
 
-.entry .num{
-  font-family:'Fraunces', serif;
-  font-weight:300;
-  font-size:30px;
-  color:var(--field);
-  opacity:.55;
-  width:34px;
-  flex-shrink:0;
-  line-height:1;
-  padding-top:2px;
-}
-
 .entry .body{ flex:1; min-width:0; }
 
 .entry .heading{
@@ -302,7 +290,6 @@ button:focus-visible, a.cta:focus-visible{
 
 @media(max-width:600px){
   .entry{ gap:12px; }
-  .entry .num{ font-size:24px; width:26px; }
   .row{ flex-direction:column; gap:0; }
 }
 
