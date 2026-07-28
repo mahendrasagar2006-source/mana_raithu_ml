@@ -466,3 +466,23 @@ button.cta:active, a.cta:active{
   }
   .fill{ transition:none; }
 }
+/* Language selector */
+.lang-sel {
+  text-align: center;
+  margin-top: 8px;
+}
+.lang-sel select {
+  padding: 4px 10px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+.lang-sel select option {
+  color: #333;
+  background: #fff;
+}

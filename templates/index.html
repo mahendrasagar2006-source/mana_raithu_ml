@@ -15,6 +15,13 @@
   </div>
   <div class="content">
     <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
+    <div class="lang-sel">
+      <select onchange="window.location=this.value">
+        {% for code, name in languages.items() %}
+        <option value="{{ url_for('set_language', lang_code=code) }}" {% if session.get('language','en')==code %}selected{% endif %}>{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
     <h1>Know what to grow, before you sow</h1>
     <p>A quick field check for farmers in Telangana &amp; Andhra Pradesh</p>
   </div>
