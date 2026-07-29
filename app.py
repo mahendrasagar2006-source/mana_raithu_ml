@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
@@ -8,13 +9,17 @@ app = Flask(__name__)
 # ==========================
 # Load Model and Artifacts
 # ==========================
-model = joblib.load("models/crop_model.pkl")
-crop_encoder = joblib.load("models/crop_encoder.pkl")
-ferN_encoder = joblib.load("models/fert_n_encoder.pkl")
-ferP_encoder = joblib.load("models/fert_p_encoder.pkl")
-ferK_encoder = joblib.load("models/fert_k_encoder.pkl")
-feature_encoders = joblib.load("models/feature_encoders.pkl")
-input_features = joblib.load("models/input_features.pkl")
+# Use absolute paths so Render can find the files regardless of working directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(BASE_DIR, "models")
+
+model = joblib.load(os.path.join(MODELS_DIR, "crop_model.pkl"))
+crop_encoder = joblib.load(os.path.join(MODELS_DIR, "crop_encoder.pkl"))
+ferN_encoder = joblib.load(os.path.join(MODELS_DIR, "fert_n_encoder.pkl"))
+ferP_encoder = joblib.load(os.path.join(MODELS_DIR, "fert_p_encoder.pkl"))
+ferK_encoder = joblib.load(os.path.join(MODELS_DIR, "fert_k_encoder.pkl"))
+feature_encoders = joblib.load(os.path.join(MODELS_DIR, "feature_encoders.pkl"))
+input_features = joblib.load(os.path.join(MODELS_DIR, "input_features.pkl"))
 
 # Dropdown values (sorted to match encoder)
 states = sorted(feature_encoders["State"]["classes_"])
@@ -124,4 +129,7 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # This runs when you test locally. 
+    # Render uses "gunicorn app:app" in the Start Command, which ignores this block.
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
