@@ -523,3 +523,6 @@ button.cta:active, a.cta:active{
   }
   .fill{ transition:none; }
 }
+.entry .num {
+  display: none;
+}
