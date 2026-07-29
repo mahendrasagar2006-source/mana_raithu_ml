@@ -1,12 +1,9 @@
-from flask import Flask, render_template, request, session, redirect, url_for  # NEW: added session, redirect, url_for
+from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
 import joblib
-import json   # NEW
-import os     # NEW
 
 app = Flask(__name__)
-app.secret_key = "crop-recommendation-secret-key-2024"  # NEW: required for session
 
 # ==========================
 # Load Model and Artifacts
@@ -26,43 +23,6 @@ seasons = sorted(feature_encoders["Season"]["classes_"])
 water_availabilities = sorted(feature_encoders["Water_Availability"]["classes_"])
 previous_crops = sorted(feature_encoders["Previous_Crop"]["classes_"])
 
-# ==========================
-# NEW: Load Translations
-# ==========================
-TRANSLATIONS = {}
-translations_dir = os.path.join(os.path.dirname(__file__), "translations")
-
-if os.path.exists(translations_dir):
-    for filename in os.listdir(translations_dir):
-        if filename.endswith(".json"):
-            lang_code = filename.replace(".json", "")
-            filepath = os.path.join(translations_dir, filename)
-            with open(filepath, "r", encoding="utf-8") as f:
-                TRANSLATIONS[lang_code] = json.load(f)
-
-LANGUAGES = {
-    "en": "English",
-    "te": "తెలుగు",
-    "hi": "हिन्दी"
-}
-
-DEFAULT_LANG = "en"
-
-
-def get_translations():
-    lang = session.get("language", DEFAULT_LANG)
-    return TRANSLATIONS.get(lang, TRANSLATIONS[DEFAULT_LANG])
-
-
-# ==========================
-# NEW: Language Switch Route
-# ==========================
-@app.route("/set_language/<lang_code>")
-def set_language(lang_code):
-    if lang_code in TRANSLATIONS:
-        session["language"] = lang_code
-    return redirect(request.referrer or url_for("home"))
-
 
 # ==========================
 # Routes
@@ -70,7 +30,6 @@ def set_language(lang_code):
 
 @app.route("/")
 def home():
-    trans = get_translations()  # NEW
     return render_template(
         "index.html",
         states=states,
@@ -79,14 +38,11 @@ def home():
         water_availabilities=water_availabilities,
         previous_crops=previous_crops,
         error="",
-        trans=trans,              # NEW
-        languages=LANGUAGES,      # NEW
     )
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    trans = get_translations()  # NEW
     try:
         # Read form values
         state = request.form["state"]
@@ -153,8 +109,6 @@ def predict():
             land_area=land_area,
             temperature=temperature,
             rainfall=rainfall,
-            trans=trans,              # NEW
-            languages=LANGUAGES,      # NEW
         )
 
     except Exception as e:
@@ -166,8 +120,6 @@ def predict():
             water_availabilities=water_availabilities,
             previous_crops=previous_crops,
             error=str(e),
-            trans=trans,              # NEW
-            languages=LANGUAGES,      # NEW
         )
 
 

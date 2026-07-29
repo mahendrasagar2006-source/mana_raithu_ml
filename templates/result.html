@@ -9,21 +9,18 @@
 <body>
 
 <header class="masthead">
+  <div class="lang-toggle" role="group" aria-label="Language / భాష">
+    <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
+    <button type="button" class="lang-btn" data-lang="te" aria-pressed="false">తె</button>
+  </div>
   <div class="arcs" aria-hidden="true">
     <svg viewBox="0 0 800 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     </svg>
   </div>
   <div class="content">
     <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
-        <div class="lang-sel">
-      <select onchange="window.location=this.value">
-        {% for code, name in languages.items() %}
-        <option value="{{ url_for('set_language', lang_code=code) }}" {% if session.get('language','en')==code %}selected{% endif %}>{{ name }}</option>
-        {% endfor %}
-      </select>
-    </div>
-    <h1>Your field, decoded</h1>
-    <p>Here's what suits the field you described</p>
+    <h1 data-i18n="headline_result">Your field, decoded</h1>
+    <p data-i18n="subtitle_result">Here's what suits the field you described</p>
   </div>
 </header>
 
@@ -33,34 +30,34 @@
     <div class="ledger-inner">
 
       <div class="result-top">
-        <p class="eyebrow">Recommended crop</p>
-        <p class="crop">{{ prediction }}</p>
+        <p class="eyebrow" data-i18n="eyebrow">Recommended crop</p>
+        <p class="crop i18n-value">{{ prediction }}</p>
       </div>
 
       <div class="block">
-        <p class="heading">Fertilizer dose (kg/acre)</p>
+        <p class="heading" data-i18n="fert_heading">Fertilizer dose (kg/acre)</p>
         <div class="dose-row">
           <div class="dose">
-            <div class="k">Nitrogen</div>
+            <div class="k" data-i18n="lbl_nitrogen">Nitrogen</div>
             <div class="v">{{ fert_n }}</div>
           </div>
           <div class="dose">
-            <div class="k">Phosphorous</div>
+            <div class="k" data-i18n="lbl_phosphorous">Phosphorous</div>
             <div class="v">{{ fert_p }}</div>
           </div>
           <div class="dose">
-            <div class="k">Potassium</div>
+            <div class="k" data-i18n="lbl_potassium">Potassium</div>
             <div class="v">{{ fert_k }}</div>
           </div>
         </div>
       </div>
 
       <div class="block">
-        <p class="heading">Other crops worth considering</p>
+        <p class="heading" data-i18n="alt_heading">Other crops worth considering</p>
         {% for name, prob in probabilities %}
         <div class="bar">
           <div class="bar-name">
-            <span>{{ name }}</span>
+            <span class="i18n-value">{{ name }}</span>
             <span class="pct">{{ (prob*100)|round(1) }}%</span>
           </div>
           <div class="track">
@@ -71,16 +68,16 @@
       </div>
 
       <div class="block">
-        <p class="heading">Field summary</p>
+        <p class="heading" data-i18n="summary_heading">Field summary</p>
         <div class="summary">
-          <div class="item"><b>State</b><span>{{ state }}</span></div>
-          <div class="item"><b>Soil type</b><span>{{ soil_type }}</span></div>
-          <div class="item"><b>Season</b><span>{{ season }}</span></div>
+          <div class="item"><b data-i18n="lbl_state_sum">State</b><span class="i18n-value">{{ state }}</span></div>
+          <div class="item"><b data-i18n="lbl_soil_sum">Soil type</b><span class="i18n-value">{{ soil_type }}</span></div>
+          <div class="item"><b data-i18n="lbl_season_sum">Season</b><span class="i18n-value">{{ season }}</span></div>
         </div>
       </div>
 
       <div class="submit-wrap result">
-        <a href="/" class="cta">Try another field</a>
+        <a href="/" class="cta" data-i18n="btn_again">Try another field</a>
       </div>
 
     </div>
@@ -88,6 +85,7 @@
 
 </div>
 
+<script src="{{ url_for('static', filename='lang.js') }}"></script>
 <script>
 document.querySelectorAll(".fill").forEach(function(bar){
   const width = bar.dataset.width;
