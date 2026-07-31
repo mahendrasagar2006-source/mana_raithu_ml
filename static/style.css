@@ -526,3 +526,10 @@ button.cta:active, a.cta:active{
 .entry .num {
   display: none;
 }
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 30%, rgba(244,241,230,0.9) 65%, #f4f1e6 100%),
+    url("https://images.pexels.com/photos/32267647/pexels-photo-32267647.jpeg?auto=compress&cs=tinysrgb&w=1920")
+      center top / cover no-repeat fixed;
+}
