@@ -82,6 +82,10 @@ const KNOWN_TERMS = {
   // states
   "Telangana": "తెలంగాణ",
   "Andhra Pradesh": "ఆంధ్రప్రదేశ్",
+  "Karnataka": "కర్ణాటక",
+  "Maharashtra": "మహారాష్ట్ర",
+  "Odisha": "ఒడిశా",
+  "Tamil Nadu": "తమిళనాడు",
   // seasons
   "Kharif": "ఖరీఫ్",
   "Rabi": "రబీ",
@@ -94,6 +98,7 @@ const KNOWN_TERMS = {
   "Alluvial": "ఒండ్రు నేల",
   "Sandy": "ఇసుక నేల",
   "Clay": "బంక నేల",
+  "Loam": "లోమీ నేల",
   "Loamy": "లోమీ నేల",
   // water availability
   "Rainfed": "వర్షాధారం",
@@ -101,6 +106,8 @@ const KNOWN_TERMS = {
   "Low": "తక్కువ",
   "Medium": "మధ్యస్థం",
   "High": "అధికం",
+  // previous crop "none"
+  "None": "లేదు",
   // crops
   "Cotton": "పత్తి",
   "Rice": "వరి",
@@ -152,13 +159,13 @@ function applyLanguage(lang){
 
   // <select> options (state, season, soil type, water, previous crop)
   document.querySelectorAll('select option').forEach(function(opt){
-    if(!opt.dataset.enText) opt.dataset.enText = opt.textContent.trim();
+    if(!opt.dataset.enText) opt.dataset.enText = opt.value || opt.textContent.trim();
     opt.textContent = translateValue(opt.dataset.enText, lang);
   });
 
   // dynamic backend values shown as plain text (crop name, bar names, summary values)
   document.querySelectorAll('.i18n-value').forEach(function(el){
-    if(!el.dataset.enText) el.dataset.enText = el.textContent.trim();
+    if(!el.dataset.enText) el.dataset.enText = el.dataset.en || el.textContent.trim();
     el.textContent = translateValue(el.dataset.enText, lang);
   });
 
@@ -175,7 +182,6 @@ document.addEventListener('DOMContentLoaded', function(){
   document.querySelectorAll('.lang-btn').forEach(function(btn){
     btn.addEventListener('click', function(){ applyLanguage(btn.dataset.lang); });
   });
-  let saved = 'en';
-  try{ saved = localStorage.getItem('mrn_lang') || 'en'; }catch(e){ /* ignore */ }
-  applyLanguage(saved);
+  // Always open the site directly in Telugu
+  applyLanguage('te');
 });

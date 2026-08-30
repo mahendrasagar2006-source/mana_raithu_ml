@@ -129,7 +129,8 @@ def predict():
 
 
 if __name__ == "__main__":
-    # This runs when you test locally. 
-    # Render uses "gunicorn app:app" in the Start Command, which ignores this block.
+    # This runs when you test locally.
+    # Render uses "gunicorn app:app" in the Start Command.
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=port, debug=True, use_reloader=False)
+    

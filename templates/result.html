@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recommendation Result — Mana Raithu Nestham</title>
+<title>సిఫారసు ఫలితం — మన రైతు నెస్తం</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <header class="masthead">
   <div class="lang-toggle" role="group" aria-label="Language / భాష">
-    <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
-    <button type="button" class="lang-btn" data-lang="te" aria-pressed="false">తె</button>
+    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    <button type="button" class="lang-btn active" data-lang="te" aria-pressed="true">తె</button>
   </div>
   <div class="arcs" aria-hidden="true">
     <svg viewBox="0 0 800 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     </svg>
   </div>
   <div class="content">
-    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
-    <h1 data-i18n="headline_result">Your field, decoded</h1>
-    <p data-i18n="subtitle_result">Here's what suits the field you described</p>
+    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="మన రైతు నెస్తం">
+    <h1 data-i18n="headline_result">మీ పొలం విశ్లేషణ</h1>
+    <p data-i18n="subtitle_result">మీరు తెలిపిన పొలానికి ఇది సరిపోతుంది</p>
   </div>
 </header>
 
@@ -29,35 +29,40 @@
   <div class="ledger">
     <div class="ledger-inner">
 
+      {% set crop_te = {'Bajra':'సజ్జ','Banana':'అరటి','Chilli':'మిర్చి','Cotton':'పత్తి','Groundnut':'వేరుశనగ','Jowar':'జొన్న','Maize':'మొక్కజొన్న','Onion':'ఉల్లిపాయ','Ragi':'రాగి','Rice':'వరి','Soybean':'సోయాబీన్','Sugarcane':'చెరకు','Sunflower':'పొద్దుతిరుగుడు','Tomato':'టమాటా','Turmeric':'పసుపు'} %}
+      {% set state_te = {'Telangana':'తెలంగాణ','Andhra Pradesh':'ఆంధ్రప్రదేశ్','Karnataka':'కర్ణాటక','Maharashtra':'మహారాష్ట్ర','Odisha':'ఒడిశా','Tamil Nadu':'తమిళనాడు'} %}
+      {% set soil_te = {'Black':'నల్ల నేల','Clay':'బంక నేల','Loam':'లోమీ నేల','Red':'ఎర్ర నేల','Sandy':'ఇసుక నేల'} %}
+      {% set season_te = {'Kharif':'ఖరీఫ్','Rabi':'రబీ','Summer':'వేసవి'} %}
+
       <div class="result-top">
-        <p class="eyebrow" data-i18n="eyebrow">Recommended crop</p>
-        <p class="crop i18n-value">{{ prediction }}</p>
+        <p class="eyebrow" data-i18n="eyebrow">సిఫారసు చేసిన పంట</p>
+        <p class="crop i18n-value" data-en="{{ prediction }}">{{ crop_te.get(prediction, prediction) }}</p>
       </div>
 
       <div class="block">
-        <p class="heading" data-i18n="fert_heading">Fertilizer dose (kg/acre)</p>
+        <p class="heading" data-i18n="fert_heading">ఎరువుల మోతాదు (కిలో/ఎకరం)</p>
         <div class="dose-row">
           <div class="dose">
-            <div class="k" data-i18n="lbl_nitrogen">Nitrogen</div>
+            <div class="k" data-i18n="lbl_nitrogen">నత్రజని</div>
             <div class="v">{{ fert_n }}</div>
           </div>
           <div class="dose">
-            <div class="k" data-i18n="lbl_phosphorous">Phosphorous</div>
+            <div class="k" data-i18n="lbl_phosphorous">భాస్వరం</div>
             <div class="v">{{ fert_p }}</div>
           </div>
           <div class="dose">
-            <div class="k" data-i18n="lbl_potassium">Potassium</div>
+            <div class="k" data-i18n="lbl_potassium">పొటాషియం</div>
             <div class="v">{{ fert_k }}</div>
           </div>
         </div>
       </div>
 
       <div class="block">
-        <p class="heading" data-i18n="alt_heading">Other crops worth considering</p>
+        <p class="heading" data-i18n="alt_heading">పరిగణించదగిన ఇతర పంటలు</p>
         {% for name, prob in probabilities %}
         <div class="bar">
           <div class="bar-name">
-            <span class="i18n-value">{{ name }}</span>
+            <span class="i18n-value" data-en="{{ name }}">{{ crop_te.get(name, name) }}</span>
             <span class="pct">{{ (prob*100)|round(1) }}%</span>
           </div>
           <div class="track">
@@ -68,16 +73,16 @@
       </div>
 
       <div class="block">
-        <p class="heading" data-i18n="summary_heading">Field summary</p>
+        <p class="heading" data-i18n="summary_heading">పొలం సారాంశం</p>
         <div class="summary">
-          <div class="item"><b data-i18n="lbl_state_sum">State</b><span class="i18n-value">{{ state }}</span></div>
-          <div class="item"><b data-i18n="lbl_soil_sum">Soil type</b><span class="i18n-value">{{ soil_type }}</span></div>
-          <div class="item"><b data-i18n="lbl_season_sum">Season</b><span class="i18n-value">{{ season }}</span></div>
+          <div class="item"><b data-i18n="lbl_state_sum">రాష్ట్రం</b><span class="i18n-value" data-en="{{ state }}">{{ state_te.get(state, state) }}</span></div>
+          <div class="item"><b data-i18n="lbl_soil_sum">నేల రకం</b><span class="i18n-value" data-en="{{ soil_type }}">{{ soil_te.get(soil_type, soil_type) }}</span></div>
+          <div class="item"><b data-i18n="lbl_season_sum">సీజన్</b><span class="i18n-value" data-en="{{ season }}">{{ season_te.get(season, season) }}</span></div>
         </div>
       </div>
 
       <div class="submit-wrap result">
-        <a href="/" class="cta" data-i18n="btn_again">Try another field</a>
+        <a href="/" class="cta" data-i18n="btn_again">మరో పొలం ప్రయత్నించండి</a>
       </div>
 
     </div>

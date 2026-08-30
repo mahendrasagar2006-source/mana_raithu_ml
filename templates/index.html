@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="te">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mana Raithu Nestham - Crop Recommendation</title>
+<title>మన రైతు నెస్తం - పంట సిఫారసు</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
 <header class="masthead">
   <div class="lang-toggle" role="group" aria-label="Language / భాష">
-    <button type="button" class="lang-btn active" data-lang="en" aria-pressed="true">EN</button>
-    <button type="button" class="lang-btn" data-lang="te" aria-pressed="false">తె</button>
+    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+    <button type="button" class="lang-btn active" data-lang="te" aria-pressed="true">తె</button>
   </div>
   <div class="arcs" aria-hidden="true">
     <svg viewBox="0 0 800 200" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     </svg>
   </div>
   <div class="content">
-    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="Mana Raithu Nestham">
-    <h1 data-i18n="headline_index">Know what to grow, before you sow</h1>
-    <p data-i18n="subtitle_index">A quick field check for farmers in Telangana &amp; Andhra Pradesh</p>
+    <img class="logo" src="{{ url_for('static', filename='logo.png') }}" alt="మన రైతు నెస్తం">
+    <h1 data-i18n="headline_index">విత్తే ముందే ఏం పండించాలో తెలుసుకోండి</h1>
+    <p data-i18n="subtitle_index">తెలంగాణ & ఆంధ్రప్రదేశ్ రైతుల కోసం త్వరిత పొలం పరిశీలన</p>
   </div>
 </header>
 
@@ -37,24 +37,24 @@
 
         <div class="entry">
           <div class="body">
-            <p class="heading" data-i18n="sec1_heading">Location &amp; season</p>
+            <p class="heading" data-i18n="sec1_heading">ప్రాంతం & సీజన్</p>
             <div class="row">
               <div class="field">
-                <label for="state" data-i18n="lbl_state">State</label>
+                <label for="state" data-i18n="lbl_state">రాష్ట్రం</label>
                 <div class="select-wrap icon-pin">
                   <select id="state" name="state" required>
                   {% for s in states %}
-                  <option value="{{ s }}">{{ s }}</option>
+                  <option value="{{ s }}">{{ {'Telangana':'తెలంగాణ','Andhra Pradesh':'ఆంధ్రప్రదేశ్','Karnataka':'కర్ణాటక','Maharashtra':'మహారాష్ట్ర','Odisha':'ఒడిశా','Tamil Nadu':'తమిళనాడు'}.get(s, s) }}</option>
                   {% endfor %}
                 </select>
                 </div>
               </div>
               <div class="field">
-                <label for="season" data-i18n="lbl_season">Season</label>
+                <label for="season" data-i18n="lbl_season">సీజన్</label>
                 <div class="select-wrap icon-calendar">
                   <select id="season" name="season" required>
                   {% for s in seasons %}
-                  <option value="{{ s }}">{{ s }}</option>
+                  <option value="{{ s }}">{{ {'Kharif':'ఖరీఫ్','Rabi':'రబీ','Summer':'వేసవి'}.get(s, s) }}</option>
                   {% endfor %}
                 </select>
                 </div>
@@ -65,24 +65,24 @@
 
         <div class="entry">
           <div class="body">
-            <p class="heading" data-i18n="sec2_heading">Soil &amp; water</p>
+            <p class="heading" data-i18n="sec2_heading">నేల & నీరు</p>
             <div class="row">
               <div class="field">
-                <label for="soil_type" data-i18n="lbl_soil_type">Soil type</label>
+                <label for="soil_type" data-i18n="lbl_soil_type">నేల రకం</label>
                 <div class="select-wrap icon-layers">
                   <select id="soil_type" name="soil_type" required>
                   {% for s in soil_types %}
-                  <option value="{{ s }}">{{ s }}</option>
+                  <option value="{{ s }}">{{ {'Black':'నల్ల నేల','Clay':'బంక నేల','Loam':'లోమీ నేల','Red':'ఎర్ర నేల','Sandy':'ఇసుక నేల'}.get(s, s) }}</option>
                   {% endfor %}
                 </select>
                 </div>
               </div>
               <div class="field">
-                <label for="water_availability" data-i18n="lbl_water">Water availability</label>
+                <label for="water_availability" data-i18n="lbl_water">నీటి లభ్యత</label>
                 <div class="select-wrap icon-droplet">
                   <select id="water_availability" name="water_availability" required>
                   {% for w in water_availabilities %}
-                  <option value="{{ w }}">{{ w }}</option>
+                  <option value="{{ w }}">{{ {'High':'అధికం','Low':'తక్కువ','Medium':'మధ్యస్థం'}.get(w, w) }}</option>
                   {% endfor %}
                 </select>
                 </div>
@@ -93,13 +93,13 @@
 
         <div class="entry">
           <div class="body">
-            <p class="heading" data-i18n="sec3_heading">Crop history</p>
+            <p class="heading" data-i18n="sec3_heading">పంట చరిత్ర</p>
             <div class="field">
-              <label for="previous_crop" data-i18n="lbl_previous_crop">Previous crop</label>
+              <label for="previous_crop" data-i18n="lbl_previous_crop">మునుపటి పంట</label>
               <div class="select-wrap icon-seed">
                   <select id="previous_crop" name="previous_crop" required>
                 {% for c in previous_crops %}
-                <option value="{{ c }}">{{ c }}</option>
+                <option value="{{ c }}">{{ {'Bajra':'సజ్జ','Banana':'అరటి','Chilli':'మిర్చి','Cotton':'పత్తి','Groundnut':'వేరుశనగ','Jowar':'జొన్న','Maize':'మొక్కజొన్న','None':'లేదు','Onion':'ఉల్లిపాయ','Ragi':'రాగి','Rice':'వరి','Soybean':'సోయాబీన్','Sugarcane':'చెరకు','Sunflower':'పొద్దుతిరుగుడు','Tomato':'టమాటా','Turmeric':'పసుపు'}.get(c, c) }}</option>
                 {% endfor %}
               </select>
                 </div>
@@ -109,26 +109,26 @@
 
         <div class="entry">
           <div class="body">
-            <p class="heading" data-i18n="sec4_heading">Land &amp; weather</p>
+            <p class="heading" data-i18n="sec4_heading">భూమి & వాతావరణం</p>
             <div class="row">
               <div class="field">
-                <label for="land_area" data-i18n="lbl_land_area">Land area (acres)</label>
+                <label for="land_area" data-i18n="lbl_land_area">భూమి విస్తీర్ణం (ఎకరాలు)</label>
                 <input type="number" id="land_area" step="1" min="1" name="land_area" required>
               </div>
               <div class="field">
-                <label for="temperature" data-i18n="lbl_temperature">Temperature (°C)</label>
+                <label for="temperature" data-i18n="lbl_temperature">ఉష్ణోగ్రత (°C)</label>
                 <input type="number" id="temperature" step="0.1" name="temperature" required>
               </div>
             </div>
             <div class="field">
-              <label for="rainfall" data-i18n="lbl_rainfall">Rainfall (mm)</label>
+              <label for="rainfall" data-i18n="lbl_rainfall">వర్షపాతం (మి.మీ)</label>
               <input type="number" id="rainfall" step="1" name="rainfall" required>
             </div>
           </div>
         </div>
 
         <div class="submit-wrap">
-          <button type="submit" class="cta" data-i18n="btn_submit">Get recommendation</button>
+          <button type="submit" class="cta" data-i18n="btn_submit">సిఫారసు పొందండి</button>
         </div>
 
       </form>
