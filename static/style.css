@@ -536,6 +536,24 @@ button.cta:active, a.cta:active{
 }
 body {
   min-height: 100vh;
+  background: var(--cream);
+}
+
+/* Full-page background video */
+.bg-video{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.bg-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
   background:
     linear-gradient(180deg,
       rgba(251,246,234,0.55) 0px,
@@ -543,7 +561,9 @@ body {
       rgba(251,246,234,0.28) 650px,
       rgba(251,246,234,0.1) 950px,
       rgba(251,246,234,0) 1300px
-    ),
-    url("https://images.pexels.com/photos/32267647/pexels-photo-32267647.jpeg?auto=compress&cs=tinysrgb&w=1920")
-      center top / cover no-repeat fixed;
+    );
+}
+
+@media (prefers-reduced-motion: reduce){
+  .bg-video{ display:none; }
 }
