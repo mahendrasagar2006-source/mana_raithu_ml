@@ -56,6 +56,13 @@
                 </div>
               </div>
               <div class="field">
+                <label for="district" data-i18n="lbl_district">జిల్లా</label>
+                <div class="select-wrap icon-pin">
+                  <select id="district" name="district" required>
+                  </select>
+                </div>
+              </div>
+              <div class="field">
                 <label for="season" data-i18n="lbl_season">సీజన్</label>
                 <div class="select-wrap icon-calendar">
                   <select id="season" name="season" required>
@@ -145,6 +152,28 @@
 </div>
 
 <script src="{{ url_for('static', filename='lang.js') }}"></script>
+<script>
+const STATES_DISTRICTS = {{ states_districts | tojson }};
+
+function populateDistricts(){
+  const stateSelect = document.getElementById("state");
+  const distSelect = document.getElementById("district");
+  const current = distSelect.value;
+  const state = stateSelect.value;
+  const list = STATES_DISTRICTS[state] || [];
+  distSelect.innerHTML = "";
+  list.forEach(function(d){
+    const opt = document.createElement("option");
+    opt.value = d;
+    opt.textContent = d;
+    distSelect.appendChild(opt);
+  });
+  if(list.indexOf(current) !== -1) distSelect.value = current;
+}
+
+document.getElementById("state").addEventListener("change", populateDistricts);
+document.addEventListener("DOMContentLoaded", populateDistricts);
+</script>
 
 </body>
 </html>

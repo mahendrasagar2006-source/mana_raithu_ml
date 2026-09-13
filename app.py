@@ -23,10 +23,17 @@ input_features = joblib.load(os.path.join(MODELS_DIR, "input_features.pkl"))
 
 # Dropdown values (sorted to match encoder)
 states = sorted(feature_encoders["State"]["classes_"])
+districts = sorted(feature_encoders["District"]["classes_"])
 soil_types = sorted(feature_encoders["Soil_Type"]["classes_"])
 seasons = sorted(feature_encoders["Season"]["classes_"])
 water_availabilities = sorted(feature_encoders["Water_Availability"]["classes_"])
 previous_crops = sorted(feature_encoders["Previous_Crop"]["classes_"])
+
+# State -> district mapping so the district dropdown only shows
+# districts of the state the farmer selected.
+data = pd.read_csv(os.path.join(BASE_DIR, "dataset", "data_core.csv"))
+district_state = data.drop_duplicates("District").set_index("District")["State"].to_dict()
+states_districts = {s: sorted(d for d in districts if district_state.get(d) == s) for s in states}
 
 
 # ==========================
@@ -38,6 +45,8 @@ def home():
     return render_template(
         "index.html",
         states=states,
+        districts=districts,
+        states_districts=states_districts,
         soil_types=soil_types,
         seasons=seasons,
         water_availabilities=water_availabilities,
@@ -51,6 +60,7 @@ def predict():
     try:
         # Read form values
         state = request.form["state"]
+        district = request.form["district"]
         soil_type = request.form["soil_type"]
         season = request.form["season"]
         water_availability = request.form["water_availability"]
@@ -62,10 +72,11 @@ def predict():
         # Encode categorical features using saved encoders
         input_data = {}
 
-        for col in ["State", "Soil_Type", "Season",
+        for col in ["State", "District", "Soil_Type", "Season",
                     "Water_Availability", "Previous_Crop"]:
             form_val = {
                 "State": state,
+                "District": district,
                 "Soil_Type": soil_type,
                 "Season": season,
                 "Water_Availability": water_availability,
@@ -107,6 +118,7 @@ def predict():
             fert_k=fert_k,
             probabilities=probabilities,
             state=state,
+            district=district,
             soil_type=soil_type,
             season=season,
             water_availability=water_availability,
@@ -120,6 +132,7 @@ def predict():
         return render_template(
             "index.html",
             states=states,
+            districts=districts,
             soil_types=soil_types,
             seasons=seasons,
             water_availabilities=water_availabilities,

@@ -103,7 +103,7 @@ body{
   width:150px;
   height:auto;
   display:block;
-  margin:0 auto 12px;
+  margin:0 auto 0;
   background:transparent;
   filter:drop-shadow(0 6px 14px rgba(30,74,40,.25));
   animation:emblemIn .7s cubic-bezier(.25,1,.4,1) both;

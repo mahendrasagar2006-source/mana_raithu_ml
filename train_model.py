@@ -38,6 +38,9 @@ print(data.isnull().sum())
 print("\nUnique States:")
 print(sorted(data["State"].unique()))
 
+print("\nUnique Districts:")
+print(sorted(data["District"].unique()))
+
 print("\nUnique Soil Types:")
 print(sorted(data["Soil_Type"].unique()))
 
@@ -63,17 +66,12 @@ print("\nUnique Fertilizer K:")
 print(sorted(data["Fertilizer_K"].unique()))
 
 # ============================
-# Drop District (high cardinality: 67 unique / 580 rows)
-# ============================
-
-data.drop("District", axis=1, inplace=True)
-
-# ============================
 # Define Features and Targets
 # ============================
 
 input_features = [
     "State",
+    "District",
     "Soil_Type",
     "Season",
     "Water_Availability",
@@ -104,7 +102,7 @@ targets = pd.DataFrame({
 # Encode Categorical Features
 # ============================
 
-categorical_cols = ["State", "Soil_Type", "Season",
+categorical_cols = ["State", "District", "Soil_Type", "Season",
                    "Water_Availability", "Previous_Crop"]
 
 ordinal_maps = {}

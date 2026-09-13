@@ -17,6 +17,7 @@ const UI_TEXT = {
     sec3_heading: "Crop history",
     sec4_heading: "Land & weather",
     lbl_state: "State",
+    lbl_district: "District",
     lbl_season: "Season",
     lbl_soil_type: "Soil type",
     lbl_water: "Water availability",
@@ -36,6 +37,7 @@ const UI_TEXT = {
     alt_heading: "Other crops worth considering",
     summary_heading: "Field summary",
     lbl_state_sum: "State",
+    lbl_district_sum: "District",
     lbl_soil_sum: "Soil type",
     lbl_season_sum: "Season",
     btn_again: "Try another field"
@@ -49,6 +51,7 @@ const UI_TEXT = {
     sec3_heading: "పంట చరిత్ర",
     sec4_heading: "భూమి & వాతావరణం",
     lbl_state: "రాష్ట్రం",
+    lbl_district: "జిల్లా",
     lbl_season: "సీజన్",
     lbl_soil_type: "నేల రకం",
     lbl_water: "నీటి లభ్యత",
@@ -68,6 +71,7 @@ const UI_TEXT = {
     alt_heading: "పరిగణించదగిన ఇతర పంటలు",
     summary_heading: "పొలం సారాంశం",
     lbl_state_sum: "రాష్ట్రం",
+    lbl_district_sum: "జిల్లా",
     lbl_soil_sum: "నేల రకం",
     lbl_season_sum: "సీజన్",
     btn_again: "మరో పొలం ప్రయత్నించండి"
