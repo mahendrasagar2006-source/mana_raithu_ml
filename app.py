@@ -13,7 +13,11 @@ app = Flask(__name__)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
 
-model = joblib.load(os.path.join(MODELS_DIR, "crop_model.pkl"))
+# The full model (crop_model.pkl) is ~1.8 GB and doesn't fit Vercel's
+# function size limits. Use the small model by default; override with the
+# MODEL_FILE env var if you want a different one.
+MODEL_FILE = os.environ.get("MODEL_FILE", "crop_model_50_12.pkl")
+model = joblib.load(os.path.join(MODELS_DIR, "small", MODEL_FILE))
 crop_encoder = joblib.load(os.path.join(MODELS_DIR, "crop_encoder.pkl"))
 ferN_encoder = joblib.load(os.path.join(MODELS_DIR, "fert_n_encoder.pkl"))
 ferP_encoder = joblib.load(os.path.join(MODELS_DIR, "fert_p_encoder.pkl"))

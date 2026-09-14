@@ -1,0 +1,11 @@
+.venv
+__pycache__
+*.pyc
+.git
+models/crop_model.pkl
+models/crop_model_backup.pkl
+models/fertilizer_model.pkl
+models/soil_encoder.pkl
+models/small/crop_model_100_10.pkl
+models/small/crop_model_100_15.pkl
+models/small/crop_model_50_10.pkl
