@@ -3,3 +3,4 @@ __pycache__/
 .env
 .vercel
 models/crop_model_backup.pkl
+models/small/crop_model_100_15.pkl
